@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/PyBlog.iml" filepath="$PROJECT_DIR$/PyBlog.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Internshify-Python.iml" filepath="$PROJECT_DIR$/Internshify-Python.iml" />
     </modules>
   </component>
 </project>

@@ -20,7 +20,7 @@ admin.site.register(Blog, BlogAdmin)
 # Register your models here.
 
 class InternshipAdmin(admin.ModelAdmin):
-    list_display = ("name", "link", "location", "role")
+    list_display = ("name", "link", "location", "role", "skill", "category", "season", "requirement", "responsibility", "date_posted")
 
 
 admin.site.register(Internship, InternshipAdmin)

@@ -48,6 +48,17 @@ class Internship(models.Model):
     location = models.CharField(max_length=255)
     link = models.CharField(max_length=255)
     role = models.CharField(max_length=255)
+    date_posted = models.CharField(null=True, max_length=255)
+    season = models.CharField(null=True, max_length=255)
+
+    requirement = models.JSONField(null=True, default=list)
+    responsibility = models.JSONField(null=True, default=list)
+    category = models.JSONField(null=True, default=list)
+    skill = models.JSONField(null=True, default=list)
+    created_at = models.DateTimeField(null=True, auto_now_add=True)
+
+    class Meta:
+        ordering = ["-created_at"]
 
     def __str__(self):
         return self.name

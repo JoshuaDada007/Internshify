@@ -5,9 +5,10 @@ from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import permission_classes
 from .serializers import UserRegisterationData, BlogSerializerData, UpdateUserSerializer, InternshipSerializer
-from .models import Blog, Internship
+from .models import Blog, Internship, CustomUser
 
 
+# for registering users
 @api_view(["POST"])
 def register_user(request):
     serializer = UserRegisterationData(data=request.data)
@@ -16,6 +17,14 @@ def register_user(request):
         return Response(serializer.data)
 
     return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def get_user(request):
+    user = request.user
+    serializer = UpdateUserSerializer(user)
+    return Response(serializer.data)
 
 
 @api_view(["POST"])
