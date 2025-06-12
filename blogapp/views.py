@@ -39,6 +39,7 @@ def create_blog(request):
 
 
 @api_view(["GET"])
+@permission_classes([IsAuthenticated])
 def view_blogs(request):
     blogs = Blog.objects.all()
     serializer = BlogSerializerData(blogs, many=True)

@@ -28,7 +28,7 @@ class UserRegisterationData(serializers.ModelSerializer):
 class UpdateUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
-        fields = ["username", "first_name", "last_name", "bio", "linkedin", "email"]
+        fields = ["id", "username", "first_name", "last_name", "bio", "linkedin", "email"]
 
 
 class SimpleAuthorSerializer(serializers.ModelSerializer):
@@ -42,7 +42,7 @@ class BlogSerializerData(serializers.ModelSerializer):
 
     class Meta:
         model = Blog
-        fields = ["id", "title", "content", "slug", "author", "published_at"]
+        fields = ["id", "title", "content", "slug", "author", "published_at", "likes"]
 
 
 class InternshipSerializer(serializers.ModelSerializer):
