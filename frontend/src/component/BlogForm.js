@@ -3,6 +3,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom"
 import { NavBar } from "./NavBar"
+import "../App.css"
 
 
 export function BlogForm() {
@@ -40,7 +41,7 @@ export function BlogForm() {
   return (
     <>
       <NavBar />
-      <h2 align="center"> Share Your Thoughts</h2>
+      <h2 className="typing" align="center"> Share Your Experience</h2>
 
       <div
         className="row justify-content-center mt-5"

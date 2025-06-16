@@ -5,7 +5,8 @@ import { Link } from "react-router-dom"
 import { NavBar } from "./NavBar"
 import { useNavigate } from "react-router-dom"
 import { BiSolidLike } from "react-icons/bi";
-import { BiSolidDislike } from "react-icons/bi";
+
+
 
 export function Blog() {
     const [blogData, setBlogData] = useState([])
@@ -14,10 +15,11 @@ export function Blog() {
     const [title, setTitle] = useState([])
     const [showForm, setShowForm] = useState(false)
     const [count, setCount] = useState(null)
-    const [disableLike, setDisableLike] = useState(true)
+    const[myLikes, setMyLikes] = useState({})
+    
+
     
     const navigate = useNavigate()
-
 
 
     useEffect(() => {
@@ -27,83 +29,72 @@ export function Blog() {
 
         console.log("This is the token")
         console.log(localStorage.getItem("accessToken"))
-    }, [title, disableLike])
+    }, [title, count])
 
     async function addLikes(id){
         try{
-            const response = await axios.get("http://127.0.0.1:8000/blogapp/get_blogs",
-            {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem("accessToken")}`
-                }
-            })
+            
+            const response = await axios.get(`http://127.0.0.1:8000/blogapp/get_blog/${id}`)
             const data = response.data
-            console.log(`This is likes`)
-            let userData = data.filter(blog => blog.id === id)
-            userData = userData[0]
-            console.log(userData.likes)
-            setCount(userData.likes)
+            setCount(data.likes)
 
+            setMyLikes(prev =>({
+                ...prev,
+                [id]: true
+            }))
+            
 
+            await axios.put(`http://127.0.0.1:8000/blogapp/update_likes/${id}`,
+            {likes: (data.likes + 1), title: data.title})
+           
+            
 
-            const addLikes = await axios.put(`http://127.0.0.1:8000/blogapp/update_blog/${id}`,
-            {likes: (userData.likes + 1), title: userData.title},
-            {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem("accessToken")}`
-                }
-            })
-            setDisableLike(false)
-
-            console.log(addLikes)
+            console.log("Like added")
              
         }catch(err){
             console.error(err)
+            console.log("From adding likes")
+
         }
     }
     async function removeLikes(id){
+        
         try{
-            const response = await axios.get("http://127.0.0.1:8000/blogapp/get_blogs",
-            {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem("accessToken")}`
-                }
-            })
+            const response = await axios.get(`http://127.0.0.1:8000/blogapp/get_blog/${id}`)
             const data = response.data
-            console.log(`This is likes`)
-            let userData = data.filter(blog => blog.id === id)
-            userData = userData[0]
-            console.log(userData.likes)
-            setCount(userData.likes)
+            setCount(data.likes)
+            setMyLikes(prev =>({
+                ...prev,
+                [id]: false
+            }))
 
 
+            const removeLikes = await axios.put(`http://127.0.0.1:8000/blogapp/update_likes/${id}`,
+            {likes: (data.likes - 1), title: data.title})
+            console.log("Like removed")
 
-            const addLikes = await axios.put(`http://127.0.0.1:8000/blogapp/update_blog/${id}`,
-            {likes: (userData.likes - 1), title: userData.title},
-            {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem("accessToken")}`
-                }
-            })
-            setDisableLike(true)
+           
 
-            console.log(addLikes)
+            console.log(myLikes)
+
              
         }catch(err){
             console.error(err)
+            console.log("From removing likes")
         }
     }
 
 
     async function getBlogs() {
         try {
-            const response = await axios.get("http://127.0.0.1:8000/blogapp/get_blogs",
+            const response = await axios.get("http://127.0.0.1:8000/blogapp/all_blogs",
                 {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("accessToken")}`
                     }
                 })
             console.log(response.data)
+            response.data.reverse()
             setBlogData(response.data)
             
 
@@ -141,14 +132,14 @@ export function Blog() {
                             <div style={{ display: "flex", justifyContent: "space-between" }}>
                                 {blogs.author ? <small style={{ color: "#6c584c" }}><i> By {blogs.author.username} </i></small> : <small style={{ color: "#6c584c" }}><i> By Anonymous </i></small>}
 
-                                {disableLike ? (<button onClick={() => addLikes(blogs.id)} style={{border: "none", background: "none"}}> <BiSolidLike color="black" />  </button>)
+                                {myLikes[blogs.id]  ? (<button onClick={() => removeLikes(blogs.id)} style={{border: "none", background: "none"}}> <BiSolidLike color="red" />  </button>)
 
-                               : (<button onClick={() => removeLikes(blogs.id)} style={{border: "none", background: "none"}}> <BiSolidDislike color="black" />  </button>)}
+                               : (<button onClick={() => addLikes(blogs.id)} style={{border: "none", background: "none"}}> <BiSolidLike color="white" />  </button>)}
 
 
                             </div> <br></br>
                             <hr></hr>
-                            <i><small><p align="center">{blogs.likes} people found this useful</p></small></i>
+                            <i><small><p align="center">{blogs.likes} users found this useful</p></small></i>
                         </div>
                     })
                     }

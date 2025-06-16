@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom"
+import { FaLinkedinIn } from "react-icons/fa";
 import "../App.css"
 export function Login() {
   
@@ -53,7 +54,7 @@ export function Login() {
 
 col-md-6 defines half the screen so adding one more of that is for the full screen. You can use this to define your screen however you like */}
 <form onSubmit={signIn} class="row g-3" style={{height: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", gap: "20px"}}>
-  <h1 ref={ref} align = "center">Internships 4 U 🧑🏾‍🎓</h1>
+  <h3 ref={ref} align = "center"><span style={{fontFamily: "monospace",width: "100%", display: "inline-flex", justifyContent: "center", alignItems: "center", fontWeight: "bold"}}>Locked<FaLinkedinIn/>👨🏾‍💻</span></h3>
   <div class="col-3">
     <label for="inputEmail4" class="form-label">Username</label>
     <input onChange={e => setUsername(e.target.value)} type="text" class="form-control" id="inputEmail4"/>

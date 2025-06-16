@@ -37,6 +37,22 @@ export function MyBlog() {
     }
   }
 
+  async function delete_blog(id){
+    try{
+      await axios.delete(`http://127.0.0.1:8000/blogapp/delete_blog/${id}`, {
+        headers:{
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+        }
+      })
+      showBlog()
+
+      alert("Blog deleted successfully")
+    }catch(err){
+      console.error(err)
+    }
+   
+  }
+
   async function showBlog() {
     try {
       const user = await axios.get("http://127.0.0.1:8000/blogapp/get_user",
@@ -47,7 +63,7 @@ export function MyBlog() {
         })
       console.log(user.data)
       const id = user.data.id
-      const response = await axios.get("http://127.0.0.1:8000/blogapp/get_blogs",
+      const response = await axios.get("http://127.0.0.1:8000/blogapp/all_blogs",
 
         {
           headers: {
@@ -68,6 +84,7 @@ export function MyBlog() {
     } catch (err) {
       console.error(err)
     }
+
 
   }
 
@@ -98,6 +115,7 @@ export function MyBlog() {
                 >
                   <h6 style={{ color: "#6c757d", textShadow: "3px 3px 6px black" }} align="center" >{blogs.title}</h6>
                   <hr></hr>
+
                   {showEdit ? (
                     <textarea
                       onClick={e => setTitle(blogs.title)}
@@ -128,33 +146,48 @@ export function MyBlog() {
                   )}
 
 
-                 {showEdit ? ( <button
-                    style={{
-                      width: "60px",
-                      display: "flex",
-                      justifyContent: "flex-end",
-                      alignItems: "center",
-                      borderRadius: "10%",
-                      border: "none",
-                      background: "none"
+                  <div style={{display: "flex", justifyContent: "space-between"}}>
+                    {showEdit ? (<button
+                      style={{
+                        width: "60px",
+                        display: "flex",
+                        justifyContent: "flex-end",
+                        alignItems: "center",
+                        borderRadius: "10%",
+                        border: "none",
+                        background: "none"
 
-                    }}
-                    onClick={() => updateBlog(blogs.id)}
-                  >
-                    submit
-                  </button>)
+                      }}
+                      onClick={() => updateBlog(blogs.id)}
+                    >
+                      submit
+                    </button>)
 
-                  :(<button onClick={() => setShowEdit(true)} style={{
-                    width: "60px",
-                    display: "flex",
-                    justifyContent: "flex-end",
-                    alignItems: "center",
-                    borderRadius: "10%",
-                    border: "none",
-                    background: "none"
+                      : (<button onClick={() => setShowEdit(true)} style={{
+                        width: "60px",
+                        display: "flex",
+                        justifyContent: "flex-end",
+                        alignItems: "center",
+                        borderRadius: "10%",
+                        border: "none",
+                        background: "none"
 
-                  }}>edit</button>
-                  )}
+                      }}>edit</button>
+                      )}
+
+                     <button onClick={()=>delete_blog(blogs.id)} style={{
+                        width: "60px",
+                        display: "flex",
+                        justifyContent: "flex-end",
+                        alignItems: "center",
+                        borderRadius: "10%",
+                        border: "none",
+                        background: "none"
+                      }}>delete</button>
+
+
+                  </div>
+
 
 
 

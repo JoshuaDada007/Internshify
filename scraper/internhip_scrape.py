@@ -30,31 +30,38 @@ location = ""
 date_posted = ""
 count = 0
 
-Internship.objects.all().delete()
-
+# Internship.objects.all().delete()
 
 driver.get("https://github.com/SimplifyJobs/Summer2025-Internships")
 
 body_tag = driver.find_elements(By.TAG_NAME, "tbody")
+wait = WebDriverWait(driver, 10)
+# t_row = wait.until(EC.presence_of_all_elements_located())
 t_row = body_tag[1].find_elements(By.TAG_NAME, "tr")
 print(f"This is the length: {len(t_row)}")
 
 for row in range(len(t_row)):
-
+    print("T_DATA has been QUERIED")
     t_data = t_row[row].find_elements(By.TAG_NAME, "td")
+    print("T_DATA has been bypassed")
 
     try:
         name = t_data[0].find_element(By.TAG_NAME, "a").text
+
     except NoSuchElementException:
         name = t_data[0].text
+
     role = t_data[1].text
     location = t_data[2].text
+
     date_posted = t_data[4].text
     try:
         link = t_data[3].find_element(By.TAG_NAME, "a").get_attribute("href")
     except NoSuchElementException:
         link = ""
 
+    # print(f"{row}: name - {name} - role - {role} - location - {location} - link - {link} ")
+#
     secondLink = t_data[3].find_elements(By.TAG_NAME, "a")
     try:
         if len(secondLink) > 0:
@@ -123,10 +130,12 @@ for row in range(len(t_row)):
             intern_obj["name"] = name
         else:
             obj.append(name)
-        # print(f"This is the name - {obj}")
+
         print(f"{count}{intern_obj}")
-        Internship.objects.create(name=name, role=role, location=location, link=link, season=season, requirement=requirement,
-                                  responsibility=responsibility, skill=skills, category=category, date_posted=date_posted)
+        # Internship.objects.create(name=name, role=role, location=location, link=link, season=season,
+        #                           requirement=requirement,
+        #                           responsibility=responsibility, skill=skills, category=category,
+        #                           date_posted=date_posted)
         count += 1
 
     except (NoSuchElementException, IndexError) as e:
@@ -144,5 +153,5 @@ for row in range(len(t_row)):
             obj.append(name)
         # print(f"This is the name - {obj}")
         print(f" -Error-{count}{intern_obj}")
-        Internship.objects.create(name=name, role=role, location=location, link=link, date_posted=date_posted)
+        # Internship.objects.create(name=name, role=role, location=location, link=link, date_posted=date_posted)
         continue

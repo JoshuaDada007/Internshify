@@ -3,6 +3,8 @@ import zlogo from "../images/zlogo.jpeg"
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { FaLinkedinIn } from "react-icons/fa";
+
 
 
 
@@ -40,7 +42,8 @@ export function NavBar() {
     <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
         <div class="container-fluid">
           <a class="navbar-brand" href="#">
-            <img style={{ borderRadius: "50%" }} src={zlogo} alt="Logo" width="60" height="60" class="d-inline-block align-text-top" />
+            {/* <img style={{ borderRadius: "50%" }} src={zlogo} alt="Logo" width="60" height="60" class="d-inline-block align-text-top" /> */}
+            <FaLinkedinIn/>
           </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -59,7 +62,8 @@ export function NavBar() {
           </div>
         </div>
       </nav>
-     <i><h6  align="right">Hi {user} 👋</h6></i> 
+      <br></br>
+     <i><h6  align="center">Hi {user} 👋</h6></i> <br></br>
     </div>
       
     </>

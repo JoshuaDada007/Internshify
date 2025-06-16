@@ -1,8 +1,14 @@
 import '../App.css';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { NavBar } from './NavBar';
+import { Tips } from './Tips';
+import "../App.css"
+import ReactMarkdown from 'react-markdown';
+import { FaRobot } from "react-icons/fa";
+
+
 
 
 export function Internship() {
@@ -11,16 +17,49 @@ export function Internship() {
     const [requirement, setRequirement] = useState([]);
     const [category, setCategory] = useState([]);
     const [skills, setSkills] = useState([]);
+    const [name, setName] = useState('');
+
     const [season, setSeason] = useState('')
+    const [loading, setLoading] = useState(false)
+    const [tips, setTips] = useState("")
 
 
 
     useEffect(() => {
         getInternships();
-        console.log("This is requirement")
-        console.log(requirement)
+
+
 
     }, []);
+
+    async function getTips(id) {
+        setLoading(true)
+        let namePrompt = ''
+        let requirementPrompt = [] || ''
+        let responsibilityPrompt = [] || ''
+        let rolePrompt = ''
+
+        internships.filter(intern => intern.id === id).map(intern => {
+            
+            namePrompt = intern.name
+            responsibilityPrompt = intern.responsibility.join(",")
+            requirementPrompt = intern.requirement.join(",")
+            rolePrompt = intern.role
+        })
+
+        const AIPrompt = `name: ${namePrompt} \n requirement: ${requirementPrompt} \n responsibility: ${responsibilityPrompt}, rolePrompt: ${rolePrompt}`
+        console.log(AIPrompt)
+       
+
+        const response = await Tips(AIPrompt)
+        setTips(response)
+        if (response) {
+            console.log(response)
+            setLoading(false)
+
+        }
+
+    }
 
     function jobDetails(id) {
         for (let internship of internships) {
@@ -28,16 +67,15 @@ export function Internship() {
                 setResponsibility(internship.responsibility);
 
                 setRequirement(internship.requirement)
-                
+                if (name) setName(internship.name)
+
+
 
                 setSeason(internship.season)
-                console.log(season);
 
                 setSkills(internship.skill)
-                console.log(skills);
 
                 setCategory(internship.category)
-                console.log(category);
             }
 
         }
@@ -50,10 +88,20 @@ export function Internship() {
             console.log("These are all the listings", response.data)
             let data = response.data
             data = data.reverse()
-            
+
+            const firstRequirement = data[0].requirement || []
+
+            const firstResponsibility = data[0].responsibility || []
+
+            const firstSkill = data[0].skill || []
+
+            setRequirement(firstRequirement)
+            setResponsibility(firstResponsibility)
+            setSkills(firstSkill)
+            console.log(firstRequirement)
             setInternships(data);
-            console.log(`This is the length: ${internships.length}`)
-            
+            console.log(`This is the length: ${data.length}`)
+
 
 
 
@@ -70,9 +118,9 @@ export function Internship() {
 
         <>
             <NavBar />
-            <div style={{overflow: "scroll"}} className="container-fluid">
+            <div style={{ overflow: "scroll" }} className="container-fluid">
                 <div className="row">
-                    <div style={{overflow: "scroll", display: "flex", flexWrap: "wrap", height: "100vh" }} class="col">
+                    <div style={{ overflow: "scroll", display: "flex", flexWrap: "wrap", height: "100vh" }} class="col">
 
                         {internships.map((internship) => (
                             <div onClick={() => jobDetails(internship.id)} style={{
@@ -86,6 +134,8 @@ export function Internship() {
                                 borderRadius: "10px",
                                 backgroundColor: "#252422",
                                 boxShadow: "0px 4px 8px rgba(0,0,0,0.1)",
+                                cursor: "pointer"
+
                             }}>
 
                                 <div className="card-body">
@@ -93,11 +143,14 @@ export function Internship() {
                                     <p className="card-text">{internship.role}</p>
                                     <small className="card-text"><i>{internship.location}</i></small> <br></br>
                                     <b><small className="card-text"><i>{internship.date_posted} ago {internship.season} </i></small> <br></br> <br></br></b>
-                                    <button style={{ background: "none", border: "none", cursor: "pointer" }}>
-                                        <a href={internship.link}>Apply</a>
-                                    </button>
-                                    <button style={{ background: "none", border: "none" }}>AI Tips</button>
-                                   
+                                    <div style={{ display: "flex", justifyContent: "space-around" }}>
+                                        <button style={{ background: "none", border: "none", cursor: "pointer" }}>
+                                            <a href={internship.link}>Apply</a>
+                                        </button>
+                                        <button onClick={() => { jobDetails(internship.id); getTips(internship.id); }} style={{ background: "none", border: "none", color: "#d90429", cursor: "pointer" }}>AI Tips </button>
+                                    </div>
+
+
                                 </div>
                                 {/* </div> */}
 
@@ -110,34 +163,57 @@ export function Internship() {
                         </div>
 
                     </div>
-                    <div className="col">
-                      <div style={{width: "100%", height: "100vh", display: "flex", flexDirection: "column", justifyContent: "center"}}>
-                       { requirement.length > 0 ? <h5 align= "center">Requirement</h5>: <h5 align= "center">Check Website for requirement</h5> }
-                      <ul>
-                        {requirement.map(item =>{
-                            return <li>{item}</li>
-                           
-                            
-                        })}
-                      </ul>
-                      {responsibility.length > 0 ? <h5 align= "center">Responsibility</h5> : <h5 align= "center">Check Website for responsibility</h5>}  
-                      <ul>
-                      {responsibility.map(item =>{
-                            return <li>{item}</li>  
-                        })}
-                      </ul>
-                      {skills.length > 0 ?<h5 align= "center">Required Skills</h5>: <h5 align= "center">Check Website for required skills</h5>}
-                      <ul>
-                      {skills.map(item =>{
-                            return <li>{item}</li>  
-                        })}
-                      </ul>
+                    <div style={{ maxWidth: "80%", display: "flex", justifyContent: "center", alignItems: "center", flexWrap: "wrap" }} className="col">
+                        {loading && <span class="loader"></span>}
+                        {tips && (
+                            <>
+                                <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-around", alignItems: "center", height: "70%" }}>
 
-                      </div>
-                        
-                        
+
+                                    <div style={{ boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)", width: "75%", padding: "1.5rem", gap: "20px", overflow: "scroll", maxHeight: "70%", border: "2px solid black", display: "flex", justifyContent: "flex-start", alignItems: "center", flexDirection: "column", borderRadius: "10px" }}>
+                                       
+                                        <ReactMarkdown>{tips}</ReactMarkdown>
+                                    </div>
+
+
+                                    <small> Please do not overload with requests</small> <span><button onClick={() => setTips("")}>back to internships</button></span>
+                                    
+
+                                </div>
+                            </>
+
+                        )}
+
+                        <div style={{ width: "100%", height: "100vh", display: (loading || tips) ? "none" : "flex", flexDirection: "column", justifyContent: "center" }}>
+
+
+                           
+                            {requirement.length > 0 ? <p align="center">Requirement</p> : <p align="center">Check Website for requirement</p>}
+                            <ul>
+                                {requirement.map(item => {
+                                    return <li>{item}</li>
+
+
+                                })}
+                            </ul>
+                            {responsibility.length > 0 ? <p align="center">Responsibility</p> : <p align="center">Check Website for responsibility</p>}
+                            <ul>
+                                {responsibility.map(item => {
+                                    return <li>{item}</li>
+                                })}
+                            </ul>
+                            {skills.length > 0 ? <p align="center">Required Skills</p> : <p align="center">Check Website for required skills</p>}
+                            <ul>
+                                {skills.map(item => {
+                                    return <li>{item}</li>
+                                })}
+                            </ul>
+
+                        </div>
+
+
                     </div>
-                    
+
 
                 </div>
             </div>

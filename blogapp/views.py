@@ -39,8 +39,15 @@ def create_blog(request):
 
 
 @api_view(["GET"])
+def get_blog(request, pk):
+    blog = Blog.objects.get(id=pk)
+    serializer = BlogSerializerData(blog)
+    return Response(serializer.data)
+
+
+@api_view(["GET"])
 @permission_classes([IsAuthenticated])
-def view_blogs(request):
+def all_blogs(request):
     blogs = Blog.objects.all()
     serializer = BlogSerializerData(blogs, many=True)
     return Response(serializer.data)
@@ -56,6 +63,16 @@ def update_blog(request, pk):
     serializer = BlogSerializerData(blog, data=request.data)
     if blog.author != user:
         return Response({"error": "This is not your blog gang :("}, status.HTTP_403_FORBIDDEN)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(["PUT"])
+def update_likes(request, pk):
+    blog = Blog.objects.get(id=pk)
+    serializer = BlogSerializerData(blog, data=request.data)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data)
