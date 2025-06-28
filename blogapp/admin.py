@@ -11,7 +11,7 @@ admin.site.register(CustomUser, CustomUserAdmin)
 
 
 class BlogAdmin(admin.ModelAdmin):
-    list_display = ["title", "content", "slug", "author", "is_draft", "created_at", "published_at"]
+    list_display = ["title", "content", "slug", "author", "is_draft", "created_at", "published_at", "likes_count"]
 
 
 admin.site.register(Blog, BlogAdmin)

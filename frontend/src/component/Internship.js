@@ -138,6 +138,7 @@ export function Internship() {
 
                             }}>
 
+
                                 <div className="card-body">
                                     <h5 className="card-title">{internship.name}</h5> <br></br>
                                     <p className="card-text">{internship.role}</p>

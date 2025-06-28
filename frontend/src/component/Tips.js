@@ -3,7 +3,7 @@ import {InferenceClient} from "@huggingface/inference"
     // const str = arr.join(",")
     const hf = new InferenceClient(process.env.REACT_APP_INTERNSHIPS)
    try{
-    const prompt = "Always introduce yourself as Joshua Dada and let them know i'm excited to assist the user before assisting"
+    const prompt = "Always introduce yourself as Joshua Dada and let them know i'm excited to assist the user before assisting and make sure you are using markdown format and also make sure you use the name of the company as the title in the request"
     const response = await hf.chatCompletion({
         model:"mistralai/Mixtral-8x7B-Instruct-v0.1",
         max_tokens: 300,

@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { FaLinkedinIn } from "react-icons/fa";
+import { FaLock } from "react-icons/fa";
+
 
 
 
@@ -43,7 +45,7 @@ export function NavBar() {
         <div class="container-fluid">
           <a class="navbar-brand" href="#">
             {/* <img style={{ borderRadius: "50%" }} src={zlogo} alt="Logo" width="60" height="60" class="d-inline-block align-text-top" /> */}
-            <FaLinkedinIn/>
+            <FaLock/><FaLinkedinIn/>
           </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>

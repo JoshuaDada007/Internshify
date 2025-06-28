@@ -14,6 +14,8 @@ class CustomUser(AbstractUser):
         return self.username
 
 
+
+
 class Blog(models.Model):
     title = models.CharField(max_length=255)
     content = models.TextField(null=True)
@@ -23,7 +25,7 @@ class Blog(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name="blogs", null=True)
     published_at = models.DateTimeField(auto_now=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    likes = models.IntegerField(default=0)
+    likes_count = models.IntegerField(default=0)
 
     def __str__(self):
         return self.title
@@ -63,3 +65,11 @@ class Internship(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Likes(models.Model):
+    liked_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name="liked_user", null=True)
+    liked_blog = models.ForeignKey(Blog, on_delete=models.SET_NULL, related_name="liked_blog",null=True)
+
+    class Meta:
+        unique_together = ["liked_user", "liked_blog"]

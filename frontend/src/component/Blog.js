@@ -10,79 +10,83 @@ import { BiSolidLike } from "react-icons/bi";
 
 export function Blog() {
     const [blogData, setBlogData] = useState([])
-    const [myBlog, setMyBlog] = useState([])
     const [content, setContent] = useState("")
     const [title, setTitle] = useState([])
-    const [showForm, setShowForm] = useState(false)
+    const [likes, setLikes] = useState(null)
     const [count, setCount] = useState(null)
-    const[myLikes, setMyLikes] = useState({})
-    
 
-    
+    const [likedBlogs, setLikedBlogs] = useState({})
+
+
+
+
     const navigate = useNavigate()
 
 
     useEffect(() => {
         getBlogs()
-        console.log("This is title")
-        console.log(title)
+        blogsLiked()
+  
 
-        console.log("This is the token")
-        console.log(localStorage.getItem("accessToken"))
     }, [title, count])
 
-    async function addLikes(id){
-        try{
-            
-            const response = await axios.get(`http://127.0.0.1:8000/blogapp/get_blog/${id}`)
-            const data = response.data
-            setCount(data.likes)
 
-            setMyLikes(prev =>({
-                ...prev,
-                [id]: true
-            }))
+    async function likesFunction(id) {
+        try {
+           const response =  await axios.post(`http://127.0.0.1:8000/blogapp/liked_blog/${id}`, {},
+            {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+                }
+            })
             
 
-            await axios.put(`http://127.0.0.1:8000/blogapp/update_likes/${id}`,
-            {likes: (data.likes + 1), title: data.title})
-           
+            blogsLiked()
+            getBlogs()
             
-
-            console.log("Like added")
-             
-        }catch(err){
-            console.error(err)
-            console.log("From adding likes")
+            console.log(response.data)
+   
 
         }
-    }
-    async function removeLikes(id){
-        
-        try{
-            const response = await axios.get(`http://127.0.0.1:8000/blogapp/get_blog/${id}`)
-            const data = response.data
-            setCount(data.likes)
-            setMyLikes(prev =>({
-                ...prev,
-                [id]: false
-            }))
 
-
-            const removeLikes = await axios.put(`http://127.0.0.1:8000/blogapp/update_likes/${id}`,
-            {likes: (data.likes - 1), title: data.title})
-            console.log("Like removed")
-
-           
-
-            console.log(myLikes)
-
-             
-        }catch(err){
+        catch (err) {
             console.error(err)
-            console.log("From removing likes")
         }
+
     }
+
+    async function blogsLiked() {
+        try {
+            const allLikes = await axios.get(`http://127.0.0.1:8000/blogapp/get_likes`,
+            {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+                }
+            })
+
+       
+        const data = allLikes.data
+
+        const obj = Object.fromEntries(data.map((val) => [val.liked_blog, val]));
+        console.log("This is obj")
+
+        setLikedBlogs(obj)
+        console.log(obj)
+
+
+       
+
+
+
+        } catch (err) {
+            console.log(err)
+            navigate("/")
+
+        }
+
+    }
+
+
 
 
     async function getBlogs() {
@@ -93,11 +97,9 @@ export function Blog() {
                         Authorization: `Bearer ${localStorage.getItem("accessToken")}`
                     }
                 })
-            console.log(response.data)
             response.data.reverse()
             setBlogData(response.data)
-            
-
+           
 
         } catch (err) {
             console.log(err)
@@ -132,14 +134,13 @@ export function Blog() {
                             <div style={{ display: "flex", justifyContent: "space-between" }}>
                                 {blogs.author ? <small style={{ color: "#6c584c" }}><i> By {blogs.author.username} </i></small> : <small style={{ color: "#6c584c" }}><i> By Anonymous </i></small>}
 
-                                {myLikes[blogs.id]  ? (<button onClick={() => removeLikes(blogs.id)} style={{border: "none", background: "none"}}> <BiSolidLike color="red" />  </button>)
+                                <button onClick={() => likesFunction(blogs.id)} style={{ border: "none", background: "none" }}> {likedBlogs && likedBlogs[blogs.id] ? <BiSolidLike color="red" /> : <BiSolidLike color="white" />}  </button>
 
-                               : (<button onClick={() => addLikes(blogs.id)} style={{border: "none", background: "none"}}> <BiSolidLike color="white" />  </button>)}
 
 
                             </div> <br></br>
                             <hr></hr>
-                            <i><small><p align="center">{blogs.likes} users found this useful</p></small></i>
+                            <i><small><p align="center">{blogs.likes_count} users found this useful</p></small></i>
                         </div>
                     })
                     }

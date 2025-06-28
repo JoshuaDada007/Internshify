@@ -4,8 +4,8 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import permission_classes
-from .serializers import UserRegisterationData, BlogSerializerData, UpdateUserSerializer, InternshipSerializer
-from .models import Blog, Internship, CustomUser
+from .serializers import UserRegisterationData, BlogSerializerData, UpdateUserSerializer, InternshipSerializer, LikeSerializer
+from .models import Blog, Internship, Likes
 
 
 # for registering users
@@ -106,3 +106,41 @@ def all_internships(request):
     internships = Internship.objects.all()
     serializer = InternshipSerializer(internships, many=True)
     return Response(serializer.data)
+
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def likes_update(request, pk):
+    user = request.user
+    blog = Blog.objects.get(id=pk)
+    existing_like = Likes.objects.filter(liked_user=user,liked_blog=blog).first()
+    if existing_like:
+        if blog.likes_count == 0:
+            blog.likes_count = 0
+        else:
+            blog.likes_count -= 1
+        existing_like.delete()
+        prev_serializer = BlogSerializerData(blog)
+        blog.save()
+        return Response(prev_serializer.data, status.HTTP_200_OK)
+    else:
+        Likes.objects.create(liked_user=user, liked_blog=blog)
+        blog.likes_count += 1
+        serializer = BlogSerializerData(blog)
+        blog.save()
+        return Response(serializer.data, status.HTTP_200_OK)
+
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def get_likes(request):
+    user = request.user
+    likes = Likes.objects.filter(liked_user=user)
+    serializer = LikeSerializer(likes, many=True)
+
+    return Response(serializer.data, status.HTTP_200_OK)
+
+
+
+
+

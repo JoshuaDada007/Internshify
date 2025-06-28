@@ -132,10 +132,10 @@ for row in range(len(t_row)):
             obj.append(name)
 
         print(f"{count}{intern_obj}")
-        # Internship.objects.create(name=name, role=role, location=location, link=link, season=season,
-        #                           requirement=requirement,
-        #                           responsibility=responsibility, skill=skills, category=category,
-        #                           date_posted=date_posted)
+        Internship.objects.create(name=name, role=role, location=location, link=link, season=season,
+                                  requirement=requirement,
+                                  responsibility=responsibility, skill=skills, category=category,
+                                  date_posted=date_posted)
         count += 1
 
     except (NoSuchElementException, IndexError) as e:
@@ -153,5 +153,5 @@ for row in range(len(t_row)):
             obj.append(name)
         # print(f"This is the name - {obj}")
         print(f" -Error-{count}{intern_obj}")
-        # Internship.objects.create(name=name, role=role, location=location, link=link, date_posted=date_posted)
+        Internship.objects.create(name=name, role=role, location=location, link=link, date_posted=date_posted)
         continue

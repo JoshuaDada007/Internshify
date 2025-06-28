@@ -11,5 +11,7 @@ urlpatterns = [
     path("update_user", views.update_user),
     path("all_internships", views.all_internships),
     path("get_user", views.get_user),
-    path("get_blog/<int:pk>", views.get_blog)
+    path("get_blog/<int:pk>", views.get_blog),
+    path("liked_blog/<int:pk>", views.likes_update),
+    path("get_likes", views.get_likes)
 ]

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from .models import Blog, Internship
+from .models import Blog, Internship, Likes
 
 
 class UserRegisterationData(serializers.ModelSerializer):
@@ -42,11 +42,22 @@ class BlogSerializerData(serializers.ModelSerializer):
 
     class Meta:
         model = Blog
-        fields = ["id", "title", "content", "slug", "author", "published_at", "likes"]
+        fields = ["id", "title", "content", "slug", "author", "published_at", "likes_count"]
 
 
 class InternshipSerializer(serializers.ModelSerializer):
     class Meta:
 
         model = Internship
+        fields = "__all__"
+
+class SimpleBlogSerializer(serializers.ModelSerializer):
+    model = Blog
+    fields = "__all__"
+
+class LikeSerializer(serializers.ModelSerializer):
+    blog = SimpleBlogSerializer(read_only=True)
+    user = SimpleAuthorSerializer(read_only=True)
+    class Meta:
+        model = Likes
         fields = "__all__"
