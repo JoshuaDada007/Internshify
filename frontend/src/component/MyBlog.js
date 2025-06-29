@@ -20,7 +20,7 @@ export function MyBlog() {
     try {
       setShowEdit(false)
       const data = { title, content }
-      const response = await axios.put(`http://127.0.0.1:8000/blogapp/update_blog/${id}`,
+      const response = await axios.put(`http://10.0.0.205:8000/blogapp/update_blog/${id}`,
         data,
 
         {
@@ -39,7 +39,7 @@ export function MyBlog() {
 
   async function delete_blog(id){
     try{
-      await axios.delete(`http://127.0.0.1:8000/blogapp/delete_blog/${id}`, {
+      await axios.delete(` http://10.0.0.205:8000/blogapp/delete_blog/${id}`, {
         headers:{
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`
         }
@@ -55,7 +55,7 @@ export function MyBlog() {
 
   async function showBlog() {
     try {
-      const user = await axios.get("http://127.0.0.1:8000/blogapp/get_user",
+      const user = await axios.get(" http://10.0.0.205:8000/blogapp/get_user",
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`
@@ -63,7 +63,7 @@ export function MyBlog() {
         })
       console.log(user.data)
       const id = user.data.id
-      const response = await axios.get("http://127.0.0.1:8000/blogapp/all_blogs",
+      const response = await axios.get("http://10.0.0.205:8000/blogapp/all_blogs",
 
         {
           headers: {
@@ -101,7 +101,7 @@ export function MyBlog() {
             {myBlogs.map(blogs => {
               return (
                 <div
-                  className="col-3"
+                  className="col-12 col-sm-6 col-md-4 col-lg-4"
                   style={{
                     maxWidth: "400px",
                     height: "300px",

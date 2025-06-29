@@ -33,7 +33,7 @@ export function Blog() {
 
     async function likesFunction(id) {
         try {
-           const response =  await axios.post(`http://127.0.0.1:8000/blogapp/liked_blog/${id}`, {},
+           const response =  await axios.post(`http://10.0.0.205:8000/blogapp/liked_blog/${id}`, {},
             {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("accessToken")}`
@@ -57,7 +57,7 @@ export function Blog() {
 
     async function blogsLiked() {
         try {
-            const allLikes = await axios.get(`http://127.0.0.1:8000/blogapp/get_likes`,
+            const allLikes = await axios.get(`http://10.0.0.205:8000/blogapp/get_likes`,
             {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("accessToken")}`
@@ -91,7 +91,7 @@ export function Blog() {
 
     async function getBlogs() {
         try {
-            const response = await axios.get("http://127.0.0.1:8000/blogapp/all_blogs",
+            const response = await axios.get("http://10.0.0.205:8000/blogapp/all_blogs",
                 {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("accessToken")}`
@@ -126,7 +126,8 @@ export function Blog() {
                 </div>
                 <div className="row" style={{ justifyContent: "center", alignItems: "center" }}>
                     {blogData.map(blogs => {
-                        return <div className="col-3" style={{ overflow: "scroll", padding: "20px", maxWidth: "400px", height: "400px", border: "1px solid black", margin: "20px", display: "flex", flexDirection: "column", justifyContent: "space-evenly", borderRadius: "10%" }}>
+                        return <div className="col-12 col-sm-12 col-lg-4 col-md-6" style={{ display: "flex", justifyContent: "center",alignItems: "center"} }> 
+                            <div className="col-12 col-sm-12 col-lg-12" style={{ overflow: "scroll", padding: "20px", maxWidth: "400px", height: "400px", border: "1px solid black", margin: "20px", display: "flex", flexDirection: "column", justifyContent: "space-evenly", borderRadius: "10%" }}>
                             <h6 style={{ color: "#6c757d", textShadow: "3px 3px 6px black" }} align="center" >{blogs.title}</h6> <hr></hr> <br></br>
 
                             <div onClick={e => setTitle(blogs.title)} onChange={e => setContent(e.target.value)} style={{ height: "80%", color: "white", backgroundColor: "#252422", overflow: "auto", boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2);", padding: "10px" }}>{blogs.content}</div>
@@ -141,6 +142,7 @@ export function Blog() {
                             </div> <br></br>
                             <hr></hr>
                             <i><small><p align="center">{blogs.likes_count} users found this useful</p></small></i>
+                        </div>
                         </div>
                     })
                     }

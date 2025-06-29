@@ -17,7 +17,7 @@ export function BlogForm() {
     e.preventDefault()
     try {
       const data = { title, content }
-      const response = await axios.post("http://127.0.0.1:8000/blogapp/new_blog",
+      const response = await axios.post(" http://10.0.0.205:8000/blogapp/new_blog",
         data,
         {
           headers: {
