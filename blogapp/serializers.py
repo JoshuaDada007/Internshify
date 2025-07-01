@@ -51,6 +51,12 @@ class InternshipSerializer(serializers.ModelSerializer):
         model = Internship
         fields = "__all__"
 
+class InternshipTestSerializer(serializers.ModelSerializer):
+    class Meta:
+
+        model = Internship
+        fields = "__all__"
+
 class SimpleBlogSerializer(serializers.ModelSerializer):
     model = Blog
     fields = "__all__"

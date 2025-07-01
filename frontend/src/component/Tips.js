@@ -2,7 +2,7 @@ import {InferenceClient} from "@huggingface/inference"
  export async function Tips(arr){
     const hf = new InferenceClient(process.env.REACT_APP_INTERNSHIPS)
    try{
-    const prompt = "Make sure the title of yur response is internship tips with the name of the company in bold.Always introduce yourself as Joshua Dada and let them know i'm excited to assist the user before assisting and make sure you are using markdown format and also make sure you use the name of the company as the title in the request. And make sure your texts are small"
+    const prompt = "Make sure the title of yur response is internship tips with the name of the company in bold.Always introduce yourself like this:  'Hello i'm Big Dih Toni and i would love to assist you with your internship preparation'  before assisting and make sure you are using markdown format and also make sure you use the name of the company as the title in the request. And make sure your texts are small"
     const response = await hf.chatCompletion({
         model:"mistralai/Mixtral-8x7B-Instruct-v0.1",
         max_tokens: 300,

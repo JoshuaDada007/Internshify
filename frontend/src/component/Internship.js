@@ -28,7 +28,7 @@ export function Internship() {
 
     async function getInternships() {
         try {
-            const response = await axios.get("http://10.0.0.205:8000/blogapp/all_internships");
+            const response = await axios.get("http://10.51.145.188:8000/blogapp/all_internships_test");
             const data = response.data.reverse();
             setInternships(data);
             if (data[0]) {
@@ -183,7 +183,7 @@ export function Internship() {
                       </div>
                     ) : mobileView === "details" ? (
                       <>
-                      <div className='bg-dark' style={{display: "flex", flexDirection: "column", justifyContent: "center", height: "70%", overflow: "scroll"}}>
+                      <div className='bg-dark' style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "center", height: "80%", overflow: "scroll"}}>
 
                       
                         <h5 className="text-center">Requirement</h5>
@@ -191,8 +191,11 @@ export function Internship() {
                           <ul>
                             {requirement.map((item, i) => (
                               <li key={i}>{item}</li>
+                              
                             ))}
+                            <hr/>
                           </ul>
+                        
                         ) : (
                           <p>Check website for requirements</p>
                         )}
@@ -203,6 +206,7 @@ export function Internship() {
                             {responsibility.map((item, i) => (
                               <li key={i}>{item}</li>
                             ))}
+                            <hr/>
                           </ul>
                         ) : (
                           <p>Check website for responsibilities</p>
@@ -252,7 +256,9 @@ export function Internship() {
                         </ul>
                       ) : (
                         <p>Check website for requirements</p>
+                        
                       )}
+                      <hr/>
                       <h5 className="text-center">Responsibility</h5>
                       {responsibility.length > 0 ? (
                         <ul>
@@ -263,6 +269,7 @@ export function Internship() {
                       ) : (
                         <p>Check website for responsibilities</p>
                       )}
+                      <hr />
                       <h5 className="text-center">Required Skills</h5>
                       {skills.length > 0 ? (
                         <ul>

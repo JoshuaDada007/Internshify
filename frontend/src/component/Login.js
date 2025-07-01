@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom"
-import { FaLinkedinIn } from "react-icons/fa";
+import { PiStudentFill } from "react-icons/pi";
 import "../App.css"
 
 export function Login() {
@@ -25,7 +25,7 @@ export function Login() {
     e.preventDefault()
 
     try {
-      const response = await axios.post(" http://10.0.0.205:8000/token/", { username, password })
+      const response = await axios.post("http://10.51.145.188:8000/token/", { username, password })
       localStorage.setItem("accessToken", response.data.access)
       localStorage.setItem("refreshToken", response.data.refresh)
       console.log(response.data)
@@ -42,7 +42,7 @@ export function Login() {
       <form onSubmit={signIn} className="row g-3 w-100 m-0" style={{ minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", gap: "20px" }}>
         <h3 ref={ref} align="center">
           <span style={{ fontFamily: "monospace", width: "100%", display: "inline-flex", justifyContent: "center", alignItems: "center", fontWeight: "bold" }}>
-            <FaLinkedinIn /> 👨🏾‍💻
+           Internships4U<PiStudentFill className="flicker-1 " color="white" size={35}/>
           </span>
         </h3>
 
@@ -59,6 +59,7 @@ export function Login() {
         <div className="col-4 col-sm-4 col-md-3 col-lg-2 text-center">
           <button type="submit" className="btn btn-primary w-100">Sign in</button>
           <p className="mt-2">Don't have an account? <Link to="/register">Register</Link></p>
+          {/* <a href="/forgotPassword">forgot password?</a> */}
         </div>
       </form>
     </>

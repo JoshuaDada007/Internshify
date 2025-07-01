@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { FaLinkedinIn } from "react-icons/fa";
-import { GiLockedHeart } from "react-icons/gi";
+import { PiStudentFill } from "react-icons/pi";
+
 
 
 
@@ -21,7 +21,7 @@ export function NavBar() {
   async function getBlogs() {
     try {
 
-      const userData = await axios.get("http://10.0.0.205:8000/blogapp/get_user",
+      const userData = await axios.get("http://10.51.145.188:8000/blogapp/get_user",
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` }
         }
@@ -44,7 +44,7 @@ export function NavBar() {
     <nav className="navbar navbar-expand-lg fixed-top bg-body-tertiary" data-bs-theme="dark">
         <div className="container-fluid">
           <a className="navbar-brand" href="/internships">
-            <GiLockedHeart/><FaLinkedinIn/>
+            <PiStudentFill size={40}/>
           </a>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
@@ -66,7 +66,7 @@ export function NavBar() {
 ]      <br></br> <br></br> <br></br>
     </div>
 
-    <i><h6 align="center">Hi {user} 👋</h6></i> 
+    <i><h6 className="bounce-in-top" align="center">Hi {user} 👋</h6></i> 
     <br></br>
    
 

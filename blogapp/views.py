@@ -4,8 +4,9 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import permission_classes
-from .serializers import UserRegisterationData, BlogSerializerData, UpdateUserSerializer, InternshipSerializer, LikeSerializer
-from .models import Blog, Internship, Likes
+from .serializers import UserRegisterationData, BlogSerializerData, UpdateUserSerializer, InternshipSerializer, \
+    LikeSerializer, InternshipTestSerializer
+from .models import Blog, Internship, Likes, InternshipTest
 
 
 # for registering users
@@ -105,6 +106,12 @@ def update_user(request):
 def all_internships(request):
     internships = Internship.objects.all()
     serializer = InternshipSerializer(internships, many=True)
+    return Response(serializer.data)
+
+@api_view(["GET"])
+def all_internships_test(request):
+    internships = InternshipTest.objects.all()
+    serializer = InternshipTestSerializer(internships, many=True)
     return Response(serializer.data)
 
 

@@ -66,6 +66,26 @@ class Internship(models.Model):
     def __str__(self):
         return self.name
 
+class InternshipTest(models.Model):
+    name = models.CharField(max_length=255)
+    location = models.CharField(max_length=255)
+    link = models.CharField(max_length=255)
+    role = models.CharField(max_length=255)
+    date_posted = models.CharField(null=True, max_length=255)
+    season = models.CharField(null=True, max_length=255)
+
+    requirement = models.JSONField(null=True, default=list)
+    responsibility = models.JSONField(null=True, default=list)
+    category = models.JSONField(null=True, default=list)
+    skill = models.JSONField(null=True, default=list)
+    created_at = models.DateTimeField(null=True, auto_now_add=True)
+
+    class Meta:
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return self.name
+
 
 class Likes(models.Model):
     liked_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name="liked_user", null=True)

@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import CustomUser, Blog, Internship
+from .models import CustomUser, Blog, Internship, InternshipTest
 
 
 class CustomUserAdmin(UserAdmin):
@@ -24,3 +24,9 @@ class InternshipAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Internship, InternshipAdmin)
+
+class InternshipTestAdmin(admin.ModelAdmin):
+    list_display = ("name", "link", "location", "role", "skill", "category", "season", "requirement", "responsibility", "date_posted")
+
+
+admin.site.register(InternshipTest, InternshipTestAdmin)

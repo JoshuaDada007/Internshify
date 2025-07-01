@@ -2,8 +2,8 @@ import { useState } from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom"
-import { FaLinkedinIn } from "react-icons/fa";
-import { BsLockFill } from "react-icons/bs";
+import { PiStudentFill } from "react-icons/pi";
+
 import "../App.css"
 
 export function Register() {
@@ -17,9 +17,9 @@ export function Register() {
     try {
       e.preventDefault()
       const data = { username, password, first_name, last_name, email }
-      const response = await axios.post(" http://10.0.0.205:8000/blogapp/register", data)
+      const response = await axios.post("http://10.51.145.188:8000/blogapp/register", data)
 
-      const verifyUser = await axios.post(" http://10.0.0.205:8000/token/", { username, password })
+      const verifyUser = await axios.post("http://10.51.145.188:8000/token/", { username, password })
 
       localStorage.setItem("accessToken", verifyUser.data.access)
       localStorage.setItem("refreshToken", verifyUser.data.refresh)
@@ -40,7 +40,7 @@ export function Register() {
         <div class="row" style={{ height: "100vh", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
         <h3 class= "typing" align="center">
         <span style={{ fontFamily: "monospace", width: "100%", display: "inline-flex", justifyContent: "center", alignItems: "center", fontWeight: "bold" }}>
-          <BsLockFill/><FaLinkedinIn />
+          Internships4U<PiStudentFill color="white" size={40}/>
         </span>
       </h3> <br></br>
           <div class="row" style={{ display: "flex", justifyContent: "center" }}>
@@ -64,15 +64,10 @@ export function Register() {
             <input onChange={e => setPassword(e.target.value)} type="password" class="form-control" id="exampleInputPassword1" /> <br></br>
           </div>
 
-
-
-          <div class="col-8 col-sm-6 col-lg-2">
-            <button style={{ marginTop: "25px" }} type="submit">register</button> <br></br>
-
-            <p>Already have an account? <Link to="/">login</Link></p>
-
-
-          </div> <br></br>
+          <div className="col-4 col-sm-4 col-md-3 col-lg-2 text-center">
+          <button type="submit" className="btn btn-primary w-100">Register</button>
+          <p className="mt-2">Don't have an account? <Link to="/">login</Link></p>
+        </div>
         </div>
 
 

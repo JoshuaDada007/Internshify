@@ -1,6 +1,5 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
-import { BlogForm } from "./BlogForm"
 import { Link } from "react-router-dom"
 import { NavBar } from "./NavBar"
 import { useNavigate } from "react-router-dom"
@@ -33,7 +32,7 @@ export function Blog() {
 
     async function likesFunction(id) {
         try {
-           const response =  await axios.post(`http://10.0.0.205:8000/blogapp/liked_blog/${id}`, {},
+           const response =  await axios.post(`http://10.51.145.188:8000/blogapp/liked_blog/${id}`, {},
             {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("accessToken")}`
@@ -57,7 +56,7 @@ export function Blog() {
 
     async function blogsLiked() {
         try {
-            const allLikes = await axios.get(`http://10.0.0.205:8000/blogapp/get_likes`,
+            const allLikes = await axios.get(`http://10.51.145.188:8000/blogapp/get_likes`,
             {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("accessToken")}`
@@ -91,7 +90,7 @@ export function Blog() {
 
     async function getBlogs() {
         try {
-            const response = await axios.get("http://10.0.0.205:8000/blogapp/all_blogs",
+            const response = await axios.get("http://10.51.145.188:8000/blogapp/all_blogs",
                 {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("accessToken")}`
@@ -119,7 +118,7 @@ export function Blog() {
             <NavBar />
 
             <div className="container-fluid">
-                <div style={{ width: "100%", display: "flex", justifyContent: "space-around" }}>
+                <div className="sticky-top" style={{ width: "100%", display: "flex", justifyContent: "space-around" }}>
                     <Link to={"/internships/createBlog"}><button style={{ borderRadius: "10px" }}>Create Blog +</button></Link>
                     <Link to={"/internships/myBlog"}><button style={{ borderRadius: "10px" }}>My Blog</button></Link>
 
