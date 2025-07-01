@@ -17,9 +17,9 @@ export function Register() {
     try {
       e.preventDefault()
       const data = { username, password, first_name, last_name, email }
-      const response = await axios.post("http://10.51.145.188:8000/blogapp/register", data)
+      const response = await axios.post("https://internshify.onrender.com/blogapp/register", data)
 
-      const verifyUser = await axios.post("http://10.51.145.188:8000/token/", { username, password })
+      const verifyUser = await axios.post("https://internshify.onrender.com/token/", { username, password })
 
       localStorage.setItem("accessToken", verifyUser.data.access)
       localStorage.setItem("refreshToken", verifyUser.data.refresh)

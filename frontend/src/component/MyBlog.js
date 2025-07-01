@@ -20,7 +20,7 @@ export function MyBlog() {
     try {
       setShowEdit(false)
       const data = { title, content }
-      const response = await axios.put(`http://10.51.145.188:8000/blogapp/update_blog/${id}`,
+      const response = await axios.put(`https://internshify.onrender.com/blogapp/update_blog/${id}`,
         data,
 
         {
@@ -39,7 +39,7 @@ export function MyBlog() {
 
   async function delete_blog(id){
     try{
-      await axios.delete(`http://10.51.145.188:8000/blogapp/delete_blog/${id}`, {
+      await axios.delete(`https://internshify.onrender.com/blogapp/delete_blog/${id}`, {
         headers:{
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`
         }
@@ -55,7 +55,7 @@ export function MyBlog() {
 
   async function showBlog() {
     try {
-      const user = await axios.get("http://10.51.145.188:8000/blogapp/get_user",
+      const user = await axios.get("https://internshify.onrender.com/blogapp/get_user",
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`
