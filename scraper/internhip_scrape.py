@@ -30,7 +30,7 @@ location = ""
 date_posted = ""
 count = 0
 
-Internship.objects.all().delete()
+# Internship.objects.all().delete()
 
 driver.get("https://github.com/SimplifyJobs/Summer2025-Internships")
 
