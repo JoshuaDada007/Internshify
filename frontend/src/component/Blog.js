@@ -32,7 +32,7 @@ export function Blog() {
 
     async function likesFunction(id) {
         try {
-           const response =  await axios.post(`http://127.0.0.1:8000/blogapp/liked_blog/${id}`, {},
+           const response =  await axios.post(`https://internshify.onrender.com/blogapp/liked_blog/${id}`, {},
             {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("accessToken")}`
@@ -56,7 +56,7 @@ export function Blog() {
 
     async function blogsLiked() {
         try {
-            const allLikes = await axios.get(`http://127.0.0.1:8000/blogapp/get_likes`,
+            const allLikes = await axios.get(`https://internshify.onrender.com/blogapp/get_likes`,
             {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("accessToken")}`
@@ -90,7 +90,7 @@ export function Blog() {
 
     async function getBlogs() {
         try {
-            const response = await axios.get("http://127.0.0.1:8000/blogapp/all_blogs",
+            const response = await axios.get("https://internshify.onrender.com/blogapp/all_blogs",
                 {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("accessToken")}`
