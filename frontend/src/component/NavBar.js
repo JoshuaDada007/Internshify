@@ -21,7 +21,7 @@ export function NavBar() {
   async function getBlogs() {
     try {
 
-      const userData = await axios.get("https://internshify.onrender.com/blogapp/get_user",
+      const userData = await axios.get("http://127.0.0.1:8000/blogapp/get_user",
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` }
         }
