@@ -5,6 +5,7 @@ import { NavBar } from './NavBar';
 import { Tips } from './Tips';
 import ReactMarkdown from 'react-markdown';
 import { GiFairyWand } from "react-icons/gi";
+import { useNavigate } from 'react-router-dom';
 
 
 export function Internship() {
@@ -18,6 +19,8 @@ export function Internship() {
     const [tips, setTips] = useState("");
     const [mobileView, setMobileView] = useState("list"); // list | details | tips
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 992);
+    const navigate = useNavigate()
+
 
     useEffect(() => {
         getInternships();
@@ -28,7 +31,7 @@ export function Internship() {
 
     async function getInternships() {
         try {
-            const response = await axios.get("https://internshify.onrender.com/blogapp/all_internships_test");
+            const response = await axios.get("https://internshify.onrender.com/all_internships_test");
             const data = response.data.reverse();
             setInternships(data);
             if (data[0]) {
@@ -38,6 +41,7 @@ export function Internship() {
             }
         } catch (err) {
             console.error(err);
+            navigate("/")
         }
     }
 

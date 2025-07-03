@@ -12,37 +12,47 @@ export function Register() {
   const [email, setEmail] = useState("")
   const [first_name, setFirstName] = useState("")
   const [last_name, setLastName] = useState("")
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
   async function register(e) {
     try {
       e.preventDefault()
+      setLoading(true)
+
       const data = { username, password, first_name, last_name, email }
       const response = await axios.post("https://internshify.onrender.com/blogapp/register", data)
 
-      const verifyUser = await axios.post("https://internshify.onrender.com/token/", { username, password })
+      if (response) {
+        setTimeout(() => {
+        }, 3000)
+      
 
-      localStorage.setItem("accessToken", verifyUser.data.access)
-      localStorage.setItem("refreshToken", verifyUser.data.refresh)
+      const verifyUser = await axios.post("https://internshify.onrender.com/token/", { username, password })
+      if (verifyUser) {
+        localStorage.setItem("accessToken", verifyUser.data.access)
+        localStorage.setItem("refreshToken", verifyUser.data.refresh)
+      }
       navigate("/internships")
-      console.log(verifyUser.data)
-      console.log(response.data)
+    }
+
     } catch (err) {
       console.error(err)
+      setLoading(false)
     }
   }
 
 
   return (
     <>
-      
+
       <form onSubmit={register}>
-        
+
         <div class="row" style={{ height: "100vh", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
-        <h3 class= "typing" align="center">
-        <span style={{ fontFamily: "monospace", width: "100%", display: "inline-flex", justifyContent: "center", alignItems: "center", fontWeight: "bold" }}>
-          Internships4U<PiStudentFill color="white" size={40}/>
-        </span>
-      </h3> <br></br>
+          <h3 class="typing" align="center">
+            <span style={{ fontFamily: "monospace", width: "100%", display: "inline-flex", justifyContent: "center", alignItems: "center", fontWeight: "bold" }}>
+              Internships4U<PiStudentFill color="white" size={40} />
+            </span>
+          </h3> <br></br>
           <div class="row" style={{ display: "flex", justifyContent: "center" }}>
             <div class="col-4 col-sm-3 col-lg-2">
               <label for="exampleInputEmail1" class="form-label">First Name</label>
@@ -64,10 +74,15 @@ export function Register() {
             <input onChange={e => setPassword(e.target.value)} type="password" class="form-control" id="exampleInputPassword1" /> <br></br>
           </div>
 
-          <div className="col-4 col-sm-4 col-md-3 col-lg-2 text-center">
-          <button type="submit" className="btn btn-primary w-100">Register</button>
-          <p className="mt-2">Don't have an account? <Link to="/">login</Link></p>
-        </div>
+          {loading ? (
+            <div className="d-flex justify-content-center align-items-center" style={{ height: "60px" }}>
+              <div className="loader"></div>
+            </div>
+          ) :
+            <div className="col-4 col-sm-4 col-md-3 col-lg-2 text-center">
+              <button style={{ padding: "7px", borderRadius: "10px" }}>Register </button>
+              <p className="mt-2">Don't have an account? <Link to="/">login</Link></p>
+            </div>}
         </div>
 
 

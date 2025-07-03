@@ -9,6 +9,9 @@ export function Login() {
   
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
+
+  const [loading, setLoading] = useState(false)
+  const [badLogin, setBadLogin] = useState(false)
   const navigate = useNavigate()
   const ref = useRef()
 
@@ -24,18 +27,28 @@ export function Login() {
   async function signIn(e) {
     e.preventDefault()
 
-    try {
+
+
+      try {
+        setLoading(true)
+      
       const response = await axios.post("https://internshify.onrender.com/token/", { username, password })
-      localStorage.setItem("accessToken", response.data.access)
-      localStorage.setItem("refreshToken", response.data.refresh)
-      console.log(response.data)
-      console.log("Signed in", username, password)
-      navigate("/internships")
+      if(response){
+        setTimeout(()=>{
+          navigate("/internships")
+          
+        }, 3000)
+      } 
+
     } catch (e) {
-      console.error(e)
-      alert("Wrong Information please try again")
+      if(e.status === 401){
+       setBadLogin(true)
+      }
+      setLoading(false)
+
     }
   }
+  
 
   return (
     <>
@@ -47,6 +60,7 @@ export function Login() {
         </h3>
 
         <div className="col-8 col-sm-8 col-md-6 col-lg-4">
+         { badLogin && <p style={{color: "red"}}>incorrect info</p>}
           <label htmlFor="inputEmail4" className="form-label">Username</label>
           <input onChange={e => setUsername(e.target.value)} type="text" className="form-control" id="inputEmail4" />
         </div>
@@ -57,8 +71,12 @@ export function Login() {
         </div>
 
         <div className="col-4 col-sm-4 col-md-3 col-lg-2 text-center">
-          <button type="submit" className="btn btn-primary w-100">Sign in</button>
-          <p className="mt-2">Don't have an account? <Link to="/register">Register</Link></p>
+          <div style={{display: "flex", justifyContent: "center", alignItems: "center", gap: "20px"}}>
+         { loading ? <div className="loader"></div> : <button style={{padding: "7px", borderRadius: "10px"}}  type="submit">sign in</button>}
+
+          </div>
+        { !loading &&  <p className="mt-2">create <Link to="/register">account?</Link></p>   }
+        
           {/* <a href="/forgotPassword">forgot password?</a> */}
         </div>
       </form>

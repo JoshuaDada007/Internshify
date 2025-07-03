@@ -39,7 +39,6 @@ export function Blog() {
                 }
             })
             
-
             blogsLiked()
             getBlogs()
             
@@ -89,24 +88,26 @@ export function Blog() {
 
 
     async function getBlogs() {
-        try {
-            const response = await axios.get("https://internshify.onrender.com/blogapp/all_blogs",
-                {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem("accessToken")}`
-                    }
-                })
-            response.data.reverse()
-            setBlogData(response.data)
+         try {
+             const response = await axios.get("https://internshify.onrender.com/blogapp/all_blogs",
+                 {
+                     headers: {
+                         Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+                     }
+                 })
+             response.data.reverse()
+             setBlogData(response.data)
            
 
-        } catch (err) {
-            console.log(err)
-            navigate("/")
+         } catch (err) {
+             console.log(err)
+             navigate("/")
 
-        }
+         }
 
-    }
+     }
+
+
 
 
 
