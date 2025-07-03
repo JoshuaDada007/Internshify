@@ -33,7 +33,10 @@ export function Login() {
         setLoading(true)
       
       const response = await axios.post("https://internshify.onrender.com/token/", { username, password })
+      localStorage.setItem("accessToken", response.data.access)
+      localStorage.setItem("refreshToken", response.data.refresh)
       if(response){
+       
         setTimeout(()=>{
           navigate("/internships")
           
