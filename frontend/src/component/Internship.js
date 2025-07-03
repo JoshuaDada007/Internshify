@@ -31,7 +31,7 @@ export function Internship() {
 
     async function getInternships() {
         try {
-            const response = await axios.get("https://internshify.onrender.com/all_internships_test");
+            const response = await axios.get("https://internshify.onrender.com/blogapp/all_internships_test");
             const data = response.data.reverse();
             setInternships(data);
             if (data[0]) {
