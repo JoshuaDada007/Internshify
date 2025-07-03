@@ -22,20 +22,19 @@ export function Register() {
       const data = { username, password, first_name, last_name, email }
       const response = await axios.post("https://internshify.onrender.com/blogapp/register", data)
 
-      if (response) {
+
         const verifyUser = await axios.post("https://internshify.onrender.com/token/", { username, password })
-        if (verifyUser) {
+
           localStorage.setItem("accessToken", verifyUser.data.access)
           localStorage.setItem("refreshToken", verifyUser.data.refresh)
-        }
-        setTimeout(() => {
+
           navigate("/internships")
-        }, 3000)
+
       
 
  
    
-    }
+
 
     } catch (err) {
       console.error(err)

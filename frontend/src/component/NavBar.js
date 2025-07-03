@@ -38,6 +38,9 @@ export function NavBar() {
     }
 
   }
+  function logOut(){
+    localStorage.clear()
+  }
   return (
     <>
     <div> 
@@ -57,7 +60,7 @@ export function NavBar() {
               {/* <a class="nav-link disabled" aria-disabled="true">Disabled</a> */}
             </div>
             <div className="col-9" style={{ display: "flex", justifyContent: "flex-end" }}>
-              <Link style={{ cursor: "pointer" }} to="/">logout</Link>
+              <Link style={{ cursor: "pointer" }} to="/"> <button onClick = {logOut}>logout</button>logout</Link>
             </div>
 
           </div>
