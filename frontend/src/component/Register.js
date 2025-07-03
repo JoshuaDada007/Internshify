@@ -27,8 +27,11 @@ export function Register() {
 
           localStorage.setItem("accessToken", verifyUser.data.access)
           localStorage.setItem("refreshToken", verifyUser.data.refresh)
+          if(localStorage.getItem("accessToken") && localStorage.getItem("refreshToken")){
+            navigate("/internships")
 
-          navigate("/internships")
+          }
+
 
       
 

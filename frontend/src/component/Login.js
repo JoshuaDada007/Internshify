@@ -35,7 +35,10 @@ export function Login() {
       const response = await axios.post("https://internshify.onrender.com/token/", { username, password })
       localStorage.setItem("accessToken", response.data.access)
       localStorage.setItem("refreshToken", response.data.refresh)
-          navigate("/internships")
+      if(localStorage.getItem("accessToken") && localStorage.getItem("refreshToken")){
+        navigate("/internships")
+
+      }
 
     } catch (e) {
       if(e.status === 401){
