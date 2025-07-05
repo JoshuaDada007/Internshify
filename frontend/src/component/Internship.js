@@ -184,7 +184,10 @@ export function Internship() {
                         <button
                           style={{ border: "none", background: "none" }}
                           className="btn btn-secondary mt-2"
-                          onClick={() => setMobileView("details")}
+                            onClick={() => {
+                            setMobileView("details");
+                            setTips("");
+                          }}
                         >
                           <IoArrowBackCircle size={30} />
                         </button>
