@@ -70,7 +70,7 @@ export function Internship() {
 
     return (
         <>
-        <NavBar />
+//        <NavBar />
         <div className="container-fluid">
           <div className="row">
             {(!isMobile || mobileView === "list") && (

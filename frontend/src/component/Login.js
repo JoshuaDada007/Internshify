@@ -77,8 +77,8 @@ export function Login() {
           </div>
         { !loading &&  <p className="mt-2">create <Link to="/register">account?</Link></p>   }
         
-          {/* <a href="/forgotPassword">forgot password?</a> */}
         </div>
+
       </form>
     </>
   )

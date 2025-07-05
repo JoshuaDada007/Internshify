@@ -57,10 +57,9 @@ export function NavBar() {
               <a className="nav-link active" aria-current="page" href="/internships">Internships</a>
               <a className="nav-link" href="/internships/blogs">Blogs</a>
               <a className="nav-link" href="/internships/createBlog">Create</a>
-              {/* <a class="nav-link disabled" aria-disabled="true">Disabled</a> */}
             </div>
             <div className="col-9" style={{ display: "flex", justifyContent: "flex-end" }}>
-              <Link style={{ cursor: "pointer" }} to="/"> <button onClick = {logOut}>logout</button>logout</Link>
+              <Link style={{ cursor: "pointer" }} to="/"> <button style={{border: "none", background: "none"}} onClick = {logOut}>logout</button></Link>
             </div>
 
           </div>
