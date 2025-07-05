@@ -68,7 +68,7 @@ export function NavBar() {
 ]      <br></br> <br></br> <br></br>
     </div>
 
-    <i><h6 className="bounce-in-top" align="center">Hi {user} 👋</h6></i> 
+    <i><h6 className="text-focus-in" align="center">Hi {user} 👋</h6></i>
     <br></br>
    
 

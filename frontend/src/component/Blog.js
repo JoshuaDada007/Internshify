@@ -118,15 +118,15 @@ export function Blog() {
         <>
             <NavBar />
 
-            <div className="container-fluid">
+            <div className="container-fluid" style={{overflow: "scroll", height: "80vh"}}>
                 <div className="sticky-top" style={{ width: "100%", display: "flex", justifyContent: "space-around" }}>
                     <Link to={"/internships/createBlog"}><button style={{ borderRadius: "10px" }}>Create Blog +</button></Link>
                     <Link to={"/internships/myBlog"}><button style={{ borderRadius: "10px" }}>My Blog</button></Link>
-
                 </div>
-                <div className="row" style={{ justifyContent: "center", alignItems: "center" }}>
+                <br/>
+                <div className="row" style={{ justifyContent: "center", alignItems: "center"}}>
                     {blogData.map(blogs => {
-                        return <div className="col-12 col-sm-12 col-lg-4 col-md-6" style={{ display: "flex", justifyContent: "center",alignItems: "center"} }> 
+                        return <div className="col-12 col-sm-12 col-lg-4 col-md-6" style={{ display: "flex", justifyContent: "center",alignItems: "center"} }>
                             <div className="col-12 col-sm-12 col-lg-12" style={{ overflow: "scroll", padding: "20px", maxWidth: "400px", height: "400px", border: "1px solid black", margin: "20px", display: "flex", flexDirection: "column", justifyContent: "space-evenly", borderRadius: "10%" }}>
                             <h6 style={{ color: "#6c757d", textShadow: "3px 3px 6px black" }} align="center" >{blogs.title}</h6> <hr></hr> <br></br>
 
