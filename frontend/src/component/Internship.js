@@ -258,20 +258,19 @@ export function Internship() {
                     </>
                   ) : null
                 ) : tips ? (
-                  <div>
-                    <div className="sticky-top" style={{ width: "100%", height: "100%", display: "flex", justifyContent: "flex-end" }}>
+                  <div className="p-3 mb-2 bg-dark text-white" style={{ height: "80vh", overflowY: "scroll", display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "center" }}>
+                    <div className="sticky-top" style={{ width: "100%", display: "flex", justifyContent: "flex-end" }}>
                       <button
                         style={{ background: "none", border: "none" }}
                         className="btn btn-secondary mt-2"
                         onClick={() => setTips("")}
                       >
-                        <IoArrowBackCircle size={30} />
+                        <IoArrowBackCircle size = {30}/>
                       </button>
                     </div>
-                    <ReactMarkdown className="p-3 mb-5 bg-dark text-white" style={{height: "80vh", overflow: "scroll", display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "center"}}>
+                    <ReactMarkdown className="w-100">
                       {tips}
                     </ReactMarkdown>
-
                   </div>
                 ) : (
                   <div className="p-3 mb-2 bg-dark text-white" style={{height: "80vh", overflow: "scroll", display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "center"}}>

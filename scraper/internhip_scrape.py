@@ -30,7 +30,7 @@ location = ""
 date_posted = ""
 count = 0
 
-# Internship.objects.all().delete()
+Internship.objects.all().delete()
 
 driver.get("https://github.com/SimplifyJobs/Summer2025-Internships")
 
@@ -132,7 +132,7 @@ for row in range(len(t_row)):
             obj.append(name)
 
         print(f"{count}{intern_obj}")
-        InternshipTest.objects.create(name=name, role=role, location=location, link=link, season=season,
+        Internship.objects.create(name=name, role=role, location=location, link=link, season=season,
                                   requirement=requirement,
                                   responsibility=responsibility, skill=skills, category=category,
                                   date_posted=date_posted)
@@ -153,5 +153,5 @@ for row in range(len(t_row)):
             obj.append(name)
         # print(f"This is the name - {obj}")
         print(f" -Error-{count}{intern_obj}")
-        InternshipTest.objects.create(name=name, role=role, location=location, link=link, date_posted=date_posted)
+        Internship.objects.create(name=name, role=role, location=location, link=link, date_posted=date_posted)
         continue
